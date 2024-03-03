@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mvvm/res/Components/round_Button.dart';
-import 'package:mvvm/utils/routes/routesName.dart';
 import 'package:mvvm/utils/utils.dart';
 import 'package:mvvm/view_model/AuthViewModel.dart';
 import 'package:provider/provider.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _RegisterViewState extends State<RegisterView> {
   ValueNotifier<bool> obsecurePassword = ValueNotifier<bool>(true);
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -38,7 +36,7 @@ class _LoginViewState extends State<LoginView> {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Login"),
+          title: const Text("Register"),
           centerTitle: true,
         ),
         body: SafeArea(
@@ -89,8 +87,8 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 SizedBox(height: height * .05),
                 RoundButton(
-                  tital: 'Login',
-                  loading: authViewModel.loading,
+                  tital: 'Register',
+                  loading: authViewModel.registerLoading,
                   onPress: () {
                     if (email.text.isEmpty) {
                       Utils.flushBarErrorMessage('Please Enter Email', context);
@@ -105,16 +103,10 @@ class _LoginViewState extends State<LoginView> {
                         'email': email.text.toString(),
                         'password': password.text.toString()
                       };
-                      authViewModel.loginApi(data, context);
+                      authViewModel.registerApi(data, context);
                     }
                   },
-                ),
-                SizedBox(height: height * .05),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, RoutesName.register);
-                    },
-                    child: const Text('register'))
+                )
               ],
             ),
           ),
